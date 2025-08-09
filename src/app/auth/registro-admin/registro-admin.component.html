@@ -1,0 +1,36 @@
+<h2 class="text-center mt-4">REGISTRO DE ADMINISTRADOR</h2>
+
+<form class="container col-md-6" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label>Nombre</label>
+      <input class="form-control" formControlName="nombre">
+    </div>
+    <div class="col-md-6">
+      <label>Apellido</label>
+      <input class="form-control" formControlName="apellido">
+    </div>
+    <div class="col-md-6">
+      <label>DNI</label>
+      <input class="form-control" formControlName="nroDocumento">
+    </div>
+    <div class="col-md-6">
+  <label>Teléfono</label>
+  <input class="form-control" formControlName="telefono">
+</div>
+    <div class="col-12">
+      <label>Correo</label>
+      <input type="email" class="form-control" formControlName="correo">
+    </div>
+    <div class="col-12">
+      <label>Contraseña</label>
+      <input type="password" class="form-control" formControlName="clave">
+    </div>
+  </div>
+
+  <div class="alert alert-success mt-3" *ngIf="ok">{{ ok }}</div>
+  <div class="alert alert-danger mt-3" *ngIf="err">{{ err }}</div>
+
+  <button class="btn btn-primary mt-2">Registrar administrador</button>
+  <a class="btn btn-link mt-2" routerLink="/auth/login">¿Ya tienes cuenta? Inicia sesión</a>
+</form>
