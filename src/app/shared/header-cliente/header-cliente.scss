@@ -1,0 +1,58 @@
+.custom-navbar {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    .navbar-brand {
+        font-size: 1.6rem;
+        letter-spacing: 1.5px;
+        color: #fff;
+    }
+
+    .custom-nav-link {
+        padding: 10px 15px;
+        transition: background-color 0.25s ease, color 0.25s ease;
+        font-weight: 500;
+        color: #ddd !important;
+
+        &:hover {
+            background-color: #444;
+            color: #fff !important;
+        }
+
+        &.active {
+            background-color: #555 !important;
+            color: #fff !important;
+            font-weight: 700;
+            box-shadow: 0 0 6px #777;
+        }
+    }
+
+    .dropdown-menu-dark {
+        background-color: #222;
+    }
+
+    .dropdown-item {
+        color: #ccc;
+
+        &:hover {
+        background-color: #555;
+        color: #fff;
+        }
+    }
+
+    .btn-outline-light {
+        border-color: #ccc;
+        color: #ccc;
+
+        &:hover {
+        background-color: #ccc;
+        color: #1a1a1a;
+        }
+    }
+
+    button, .btn, a.nav-link {
+        border-radius: 8px !important;
+        outline: none !important;
+    }
+}
