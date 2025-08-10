@@ -1,3 +1,4 @@
+import { Router, RouterModule } from '@angular/router';
 import { Component, ViewEncapsulation  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -7,7 +8,7 @@ import { HeaderAdmin } from "../../shared/header-admin/header-admin";
 @Component({
   standalone: true,
   selector: 'app-home',
-  imports: [CommonModule, HeaderAdmin],
+  imports: [RouterModule, CommonModule, HeaderAdmin],
   templateUrl: './home.html',
   styleUrl: './home.scss',
   encapsulation: ViewEncapsulation.None 
