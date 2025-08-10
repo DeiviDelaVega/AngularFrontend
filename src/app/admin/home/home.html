@@ -1,5 +1,14 @@
-<p>home works!</p>
+<app-header-admin></app-header-admin>
+<div class="fade-in">
+  <div class="contenedor py-4 text-center">
+    <h1><strong>Hola </strong> <span>{{nombre}} {{apellido}}</span></h1>
+    <h2><strong>Bienvenido a la vista de ADMINISTRADOR</strong></h2>
 
-<button routerLink="/clienteAdmin" class="btn btn-primary">
-  Ir a Clientes Admin (Prueba)
-</button>
+    <div class="banner-container">
+      <img [src]="imagenActual"
+           [style.opacity]="opacidad"
+           class="img-fluid"
+           alt="Banner">
+    </div>
+  </div>
+</div>
