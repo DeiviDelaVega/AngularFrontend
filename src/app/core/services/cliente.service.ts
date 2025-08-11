@@ -35,6 +35,7 @@ export class ClienteService {
   }
 
   actualizarCliente(id: number, cliente: Cliente): Observable<Cliente> {
+
     return this.http.put<Cliente>(`${this.baseUrl}/actualizar/${id}`, cliente);
   }
 

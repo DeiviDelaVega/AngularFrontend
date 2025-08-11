@@ -8,11 +8,10 @@ import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/edita
 export const routes: Routes = [
   
   //ClienteAdmin
-  /* sin el admin{ path: 'clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-   */
   { path: 'admin/clienteAdmin', component: ListadoClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
   { path: 'admin/clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
   { path: 'admin/clienteAdmin/editar/:id', component: EditarClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
+
   
   //Autenticacion rutas de auth (login, registro, etc)
   { path: 'auth/login', loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
