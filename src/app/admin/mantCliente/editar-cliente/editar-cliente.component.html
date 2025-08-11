@@ -1,3 +1,5 @@
+<app-header-admin></app-header-admin>
+<br>
 <h2 class="text-center section-title">
   ACTUALIZAR DATOS DEL CLIENTE CON ID {{ cliente.idCliente }}
 </h2>
@@ -56,7 +58,7 @@
       <div class="button-group-container">
         <button type="submit" class="btn-dark" [disabled]="clienteForm.invalid">Actualizar</button>
         <div class="button-spacer"></div>
-        <a [routerLink]="['/clienteAdmin']" class="btn btn-secondary">Cancelar</a>
+        <a [routerLink]="['/admin/clienteAdmin']" class="btn btn-secondary">Cancelar</a>
       </div>
     </form>
   </div>

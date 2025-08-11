@@ -4,10 +4,11 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ClienteService, Cliente } from '../../../core/services/cliente.service';
+import { HeaderAdmin } from '../../../shared/header-admin/header-admin';
 
 @Component({
   selector: 'app-editar-cliente',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderAdmin],
   templateUrl: './editar-cliente.component.html',
   styleUrl: './editar-cliente.scss'
 })
@@ -76,11 +77,11 @@ cargarCliente(id: number): void {
       if (result.isConfirmed) {
         this.clienteService.actualizarCliente(this.cliente.idCliente, this.cliente).subscribe({
           next: () => {
-            this.router.navigate(['/clienteAdmin'], { queryParams: { actualizado: true } });
+            this.router.navigate(['/admin/clienteAdmin'], { queryParams: { actualizado: true } });
           },
           error: () => {
             Swal.fire('Error', 'No se pudo actualizar el cliente', 'error');
-            this.router.navigate(['/clienteAdmin'], { queryParams: { actualizado: false } });
+            this.router.navigate(['/admin/clienteAdmin'], { queryParams: { actualizado: false } });
           }
         });
       }

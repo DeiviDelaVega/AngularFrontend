@@ -20,14 +20,14 @@ export interface Cliente {
 export class ClienteService {
   private http = inject(HttpClient);
 
-  private baseUrl = 'http://localhost:8080/api/admin';
+  private baseUrl = 'http://localhost:8080/api/admin/clienteAdmin';
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.baseUrl}/clienteAdmin`);
+    return this.http.get<Cliente[]>(`${this.baseUrl}`);
   }
 
   getClientePorId(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.baseUrl}/clienteAdmin/${id}`);
+    return this.http.get<Cliente>(`${this.baseUrl}/${id}`);
   }
 
   guardarCliente(cliente: Cliente): Observable<Cliente> {
@@ -35,20 +35,20 @@ export class ClienteService {
   }
 
   actualizarCliente(id: number, cliente: Cliente): Observable<Cliente> {
-    return this.http.put<Cliente>(`${this.baseUrl}/clienteAdmin/actualizar/${id}`, cliente);
+    return this.http.put<Cliente>(`${this.baseUrl}/actualizar/${id}`, cliente);
   }
 
   eliminarCliente(id: number): Observable<any> {
-    return this.http.delete<void>(`${this.baseUrl}/clienteAdmin/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
   getClientesPaginados(page: number, size: number) {
     return this.http.get<PageResponse<Cliente>>(
-      `${this.baseUrl}/clienteAdmin/paginado?page=${page}&size=${size}`
+      `${this.baseUrl}/paginado?page=${page}&size=${size}`
     );
   }
 
   getClientesPaginadosConFiltro(filtro: string, page: number, size: number): Observable<PageResponse<Cliente>> {
-    return this.http.get<PageResponse<Cliente>>(`${this.baseUrl}/clienteAdmin/paginacionFiltro?filtro=${filtro}&page=${page}&size=${size}`);
+    return this.http.get<PageResponse<Cliente>>(`${this.baseUrl}/paginacionFiltro?filtro=${filtro}&page=${page}&size=${size}`);
   }
 }
