@@ -1,3 +1,4 @@
+
 <app-header-admin></app-header-admin>
 <br>
 <div class="list-clientes-container container py-4 fade-in">
@@ -62,6 +63,7 @@
                     <td>{{ cliente.estado }}</td>
                     <td class="text-nowrap">
                         <div class="d-flex gap-2">
+
                             <a [routerLink]="['/admin/clienteAdmin/detalle', cliente.idCliente]" title="Detalle"
                                 class="text-decoration-none">
                                 <i class="fa fa-magnifying-glass icon-action"></i>
@@ -121,3 +123,4 @@
             </ul>
         </nav>
     </div>
+

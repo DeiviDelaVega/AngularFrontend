@@ -4,6 +4,7 @@ import { roleGuard } from './core/role-guard';
 import { ListadoClienteComponent } from './admin/mantCliente/listado-cliente/listado-cliente.component';
 import { DetalleClienteComponent } from './admin/mantCliente/detalle-cliente/detalle-cliente.component';
 import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/editar-cliente.component';
+
 import { guestGuard } from './core/guest-guard';
 export const routes: Routes = [
   
@@ -28,6 +29,16 @@ export const routes: Routes = [
     path: 'admin', loadComponent: () => import('./admin/home/home').then(c => c.Home),
     canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }
   },
+
+//Admin reservas
+  { 
+    path: 'admin/reservas',        
+    loadComponent: () => import('./admin/mantReservas/list-reserva/list-reserva.component').then(c => c.ListReservaComponent),
+    canActivate: [authGuard, roleGuard], 
+    data: { roles: ['ROLE_admin'] }
+  },
+
+
     //Admin inmuebles
   { 
     path: 'admin/inmuebles',        loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),

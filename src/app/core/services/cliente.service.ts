@@ -20,6 +20,7 @@ export interface Cliente {
 export class ClienteService {
   private http = inject(HttpClient);
 
+
   private baseUrl = 'http://localhost:8080/api/admin/clienteAdmin';
 
   getClientes(): Observable<Cliente[]> {
@@ -36,6 +37,7 @@ export class ClienteService {
 
   actualizarCliente(id: number, cliente: Cliente): Observable<Cliente> {
 
+
     return this.http.put<Cliente>(`${this.baseUrl}/actualizar/${id}`, cliente);
   }
 
@@ -45,11 +47,14 @@ export class ClienteService {
 
   getClientesPaginados(page: number, size: number) {
     return this.http.get<PageResponse<Cliente>>(
+
       `${this.baseUrl}/paginado?page=${page}&size=${size}`
     );
   }
 
   getClientesPaginadosConFiltro(filtro: string, page: number, size: number): Observable<PageResponse<Cliente>> {
+
     return this.http.get<PageResponse<Cliente>>(`${this.baseUrl}/paginacionFiltro?filtro=${filtro}&page=${page}&size=${size}`);
+
   }
 }

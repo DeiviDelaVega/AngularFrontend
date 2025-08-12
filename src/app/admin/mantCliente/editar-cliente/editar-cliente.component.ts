@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ClienteService, Cliente } from '../../../core/services/cliente.service';
+
 import { HeaderAdmin } from '../../../shared/header-admin/header-admin';
 
 @Component({
@@ -77,6 +78,7 @@ cargarCliente(id: number): void {
       if (result.isConfirmed) {
         this.clienteService.actualizarCliente(this.cliente.idCliente, this.cliente).subscribe({
           next: () => {
+
             this.router.navigate(['/admin/clienteAdmin'], { queryParams: { actualizado: true } });
           },
           error: () => {
