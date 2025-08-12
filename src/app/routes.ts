@@ -4,7 +4,7 @@ import { roleGuard } from './core/role-guard';
 import { ListadoClienteComponent } from './admin/mantCliente/listado-cliente/listado-cliente.component';
 import { DetalleClienteComponent } from './admin/mantCliente/detalle-cliente/detalle-cliente.component';
 import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/editar-cliente.component';
-
+import { guestGuard } from './core/guest-guard';
 export const routes: Routes = [
   
   //ClienteAdmin
@@ -14,9 +14,9 @@ export const routes: Routes = [
 
   
   //Autenticacion rutas de auth (login, registro, etc)
-  { path: 'auth/login', loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
-  { path: 'auth/registro-cliente', loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
-  { path: 'auth/registro-admin', loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
+  { path: 'auth/login',canActivate: [guestGuard], loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
+  { path: 'auth/registro-cliente', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
+  { path: 'auth/registro-admin', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
   
   //Proteccion Cliente
   {
