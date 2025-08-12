@@ -27,6 +27,15 @@ export const routes: Routes = [
     path: 'admin', loadComponent: () => import('./admin/home/home').then(c => c.Home),
     canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }
   },
+
+//Admin reservas
+  { 
+    path: 'admin/reservas',        
+    loadComponent: () => import('./admin/mantReservas/list-reserva/list-reserva.component').then(c => c.ListReservaComponent),
+    canActivate: [authGuard, roleGuard], 
+    data: { roles: ['ROLE_admin'] }
+  },
+
     //Admin inmuebles
   { 
     path: 'admin/inmuebles',        loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),
