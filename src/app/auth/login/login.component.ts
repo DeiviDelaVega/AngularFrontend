@@ -26,12 +26,17 @@ export class LoginComponent {
     captcha: ['']
   });
 
-  submit() {
-    if (this.form.invalid) return;
-    const dto: LoginDTO = this.form.getRawValue();
-    this.auth.login(dto).subscribe({
-      next: r => this.router.navigateByUrl(r.role === 'ROLE_admin' ? '/admin' : '/cliente'),
-      error: () => this.error = 'Correo o contraseña inválidos'
-    });
-  }
+ submit() {
+  if (this.form.invalid) return;
+  const dto: LoginDTO = this.form.getRawValue();
+
+  this.auth.login(dto).subscribe({
+    next: r => {
+      const url = r.role === 'ROLE_admin' ? '/admin' : '/cliente';
+      this.router.navigateByUrl(url, { replaceUrl: true }); // 👈 clave
+    },
+    error: () => this.error = 'Correo o contraseña inválidos'
+  });
+}
+
 }

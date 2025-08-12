@@ -10,10 +10,16 @@ export interface LoginResponse { token: string; role: string; email: string; }
 export class AuthService {
   private api = environment.api;
   constructor(private http: HttpClient) {}
-  login(dto: { email:string; password:string; captcha?:string }) {
-    return this.http.post<LoginResponse>(`${this.api}/auth/login`, dto)
-      .pipe(tap(r => localStorage.setItem('token', r.token)));
-  }
+  // src/app/core/auth.service.ts
+login(dto: { email: string; password: string; captcha?: string }) {
+  return this.http.post<LoginResponse>(`${this.api}/auth/login`, dto)
+    .pipe(tap(r => {
+      localStorage.setItem('token', r.token);
+      localStorage.setItem('role', r.role);   // 👈 guardamos el rol
+      localStorage.setItem('email', r.email); // 👈 opcional
+    }));
+}
+
   registroCliente(dto: any) { return this.http.post<void>(`${this.api}/auth/registro/cliente`, dto); }
   registroAdmin(dto: any)   { return this.http.post<void>(`${this.api}/auth/registro/admin`, dto); }
   me() { return this.http.get<any>(`${this.api}/auth/me`); }
