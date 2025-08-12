@@ -44,7 +44,7 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
           <li class="nav-item">
             <a
               class="nav-link custom-nav-link"
-              routerLink="/admin/cliente"
+              routerLink="/admin/clienteAdmin"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="closeNavbar()"
