@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-list-inmueble',
   standalone: true,
-  imports: [HeaderAdmin, FormsModule, CommonModule],
+  imports: [RouterModule, HeaderAdmin, FormsModule, CommonModule],
   templateUrl: './list-inmueble.component.html',
   styleUrl: './list-inmueble.component.scss'
 })

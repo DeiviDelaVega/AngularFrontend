@@ -28,6 +28,8 @@ export class Home {
       .subscribe(r => {
         this.nombre = r.nombre;
         this.apellido = r.apellido;
+        // Guarda el id en localStorage
+        localStorage.setItem('adminId', r.id); 
       });
     // Inicia rotación
     setTimeout(() => this.bajarOpacidad(), 1000);
