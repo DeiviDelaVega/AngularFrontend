@@ -6,7 +6,6 @@ import { DetalleClienteComponent } from './admin/mantCliente/detalle-cliente/det
 import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/editar-cliente.component';
 
 export const routes: Routes = [
-  
   //ClienteAdmin
   { path: 'clienteAdmin', component: ListadoClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
   { path: 'clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
@@ -32,11 +31,11 @@ export const routes: Routes = [
     path: 'admin/inmuebles',        loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),
     canActivate: [authGuard, roleGuard], 
     data: { roles: ['ROLE_admin'] }
-  },/*
+  },
   { 
     path: 'admin/inmuebles/create', loadComponent: () => import('./admin/mantInmueble/create-inmueble/create-inmueble.component').then(c => c.CreateInmuebleComponent),
     canActivate: [authGuard, roleGuard], 
-    data: { roles: ['ROLE_admin'] }
+    data: { roles: ['ROLE_admin'] } 
   },
   { 
     path: 'admin/inmuebles/edit/:id', loadComponent: () => import('./admin/mantInmueble/edit-inmueble/edit-inmueble.component').then(c => c.EditInmuebleComponent),
@@ -47,7 +46,7 @@ export const routes: Routes = [
     path: 'admin/inmuebles/detail/:id', loadComponent: () => import('./admin/mantInmueble/detail-inmueble/detail-inmueble.component').then(c => c.DetailInmuebleComponent),
     canActivate: [authGuard, roleGuard], 
     data: { roles: ['ROLE_admin'] }
-  },*/
+  },
 
   // ruta raíz redirige a login
   { path: '', pathMatch: 'full', redirectTo: 'auth/login' },

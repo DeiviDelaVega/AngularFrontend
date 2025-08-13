@@ -44,7 +44,7 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
           <li class="nav-item">
             <a
               class="nav-link custom-nav-link"
-              routerLink="/admin/cliente"
+              routerLink="/clienteAdmin"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="closeNavbar()"
@@ -58,9 +58,8 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
               class="nav-link custom-nav-link"
               routerLink="/admin/inmuebles"
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
               (click)="closeNavbar()"
-            >
+            ><!--[routerLinkActiveOptions]="{ exact: true }" Hace que solo se active en la ruta exacta (debe ir dentro de la etiqueta a para que funcione)-->
               Inmuebles
             </a>
           </li>

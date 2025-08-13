@@ -6,11 +6,12 @@ import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { HeaderAdmin } from "../../../shared/header-admin/header-admin";
 
 @Component({
   selector: 'app-listado-cliente',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderAdmin],
   templateUrl: './listado-cliente.component.html',
   styleUrls: ['./listado-cliente.component.scss']
 })
