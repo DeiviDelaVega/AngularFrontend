@@ -11,7 +11,7 @@ import { HeaderAdmin } from "../../../shared/header-admin/header-admin";
 @Component({
   selector: 'app-listado-cliente',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, HeaderAdmin],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderAdmin ],
   templateUrl: './listado-cliente.component.html',
   styleUrls: ['./listado-cliente.component.scss']
 })

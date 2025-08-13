@@ -4,29 +4,40 @@ import { roleGuard } from './core/role-guard';
 import { ListadoClienteComponent } from './admin/mantCliente/listado-cliente/listado-cliente.component';
 import { DetalleClienteComponent } from './admin/mantCliente/detalle-cliente/detalle-cliente.component';
 import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/editar-cliente.component';
+import { guestGuard } from './core/guest-guard';
 
 export const routes: Routes = [
   //ClienteAdmin
-  { path: 'clienteAdmin', component: ListadoClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-  { path: 'clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-  { path: 'clienteAdmin/editar/:id', component: EditarClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-  
+  { path: 'admin/clienteAdmin', component: ListadoClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
+  { path: 'admin/clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
+  { path: 'admin/clienteAdmin/editar/:id', component: EditarClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
+
   //Autenticacion rutas de auth (login, registro, etc)
-  { path: 'auth/login', loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
-  { path: 'auth/registro-cliente', loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
-  { path: 'auth/registro-admin', loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
+  { path: 'auth/login',canActivate: [guestGuard], loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
+  { path: 'auth/registro-cliente', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
+  { path: 'auth/registro-admin', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
   
   //Proteccion Cliente
   {
     path: 'cliente', loadComponent: () => import('./cliente/home/home.component').then(c => c.HomeClienteComponent),
     canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_cliente'] }
   },
-    //Proteccion Admin
+  
+  //Proteccion Admin
   {
     path: 'admin', loadComponent: () => import('./admin/home/home').then(c => c.Home),
     canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }
   },
-    //Admin inmuebles
+
+  //Admin reservas
+  { 
+    path: 'admin/reservas',        
+    loadComponent: () => import('./admin/mantReservas/list-reserva/list-reserva.component').then(c => c.ListReservaComponent),
+    canActivate: [authGuard, roleGuard], 
+    data: { roles: ['ROLE_admin'] }
+  },
+
+  //Admin inmuebles
   { 
     path: 'admin/inmuebles',        loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),
     canActivate: [authGuard, roleGuard], 
