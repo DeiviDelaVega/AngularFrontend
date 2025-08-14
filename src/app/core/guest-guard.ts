@@ -5,12 +5,12 @@ import { CanActivateFn, Router } from '@angular/router';
 export const guestGuard: CanActivateFn = () => {
   const router = inject(Router);
   const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role');
+  let role = localStorage.getItem('role');
 
   if (token) {
-    // Ya está logueado, lo mandamos a su dashboard
+    if (role && !role.startsWith('ROLE_')) role = `ROLE_${role}`;
     router.navigateByUrl(role === 'ROLE_admin' ? '/admin' : '/cliente');
     return false;
   }
-  return true; // Puede entrar si no está logueado
+  return true;
 };
