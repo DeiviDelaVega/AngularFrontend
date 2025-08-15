@@ -1,0 +1,139 @@
+<app-header-cliente></app-header-cliente>
+
+<div class="container py-4 fade-in">
+  <!-- Título -->
+  <h2 class="text-center fw-bold mb-4 display-6">
+    🏠 Inmuebles Disponibles
+  </h2>
+
+  <!-- Barra de búsqueda -->
+  <form (ngSubmit)="buscar()" class="mb-4">
+    <div class="search-bar bg-white rounded-pill shadow-sm p-2 d-flex align-items-center animate__animated animate__fadeInDown">
+      <i class="fa-solid fa-search ms-3 text-muted"></i>
+      <input type="text" class="form-control border-0 shadow-none"
+             [(ngModel)]="filtro" name="filtro"
+             placeholder="Busca tu próximo lugar...">
+      <button type="submit" class="btn btn-dark rounded-pill px-4">Buscar</button>
+      <button type="button" class="btn btn-outline-secondary rounded-pill px-4 ms-2"
+              (click)="toggleFiltros()">
+        <i class="fa fa-sliders-h me-2"></i> Filtros
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div *ngIf="mostrarFiltros" class="bg-light rounded-4 p-4 mt-3 shadow-sm border-start border-4 border-dark">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Precio desde:</label>
+          <input type="number" class="form-control" [(ngModel)]="precioDesde" name="precioDesde" placeholder="S/.">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Precio hasta:</label>
+          <input type="number" class="form-control" [(ngModel)]="precioHasta" name="precioHasta" placeholder="S/.">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Fecha desde:</label>
+          <input type="date" class="form-control" [(ngModel)]="fechaDesde" name="fechaDesde">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Fecha hasta:</label>
+          <input type="date" class="form-control" [(ngModel)]="fechaHasta" name="fechaHasta">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">Estado:</label>
+          <select class="form-select" [(ngModel)]="estado" name="estado">
+            <option value="">-- Seleccionar --</option>
+            <option value="Si">Disponible</option>
+            <option value="No">Ocupado</option>
+          </select>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-dark me-2">Buscar</button>
+        <button type="button" class="btn btn-secondary" (click)="limpiar()">Limpiar</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Alerta -->
+  <div *ngIf="alerta" class="alert alert-warning text-center rounded-pill shadow-sm border border-warning">
+    <p class="mb-1">{{ alerta }}</p>
+    <a [routerLink]="['/cliente/catalogo/motivo-sancion']" class="btn btn-link">Ver motivos de sanción</a>
+  </div>
+
+  <!-- Listado -->
+  <div *ngIf="inmuebles.length > 0; else sinInmuebles">
+    <div class="row g-4">
+      <div *ngFor="let inmueble of inmuebles" class="col-md-4 animate__animated animate__fadeInUp">
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden h-100 hover-shadow">
+          <div class="position-relative">
+            <img [src]="inmueble.imagenHabitacion" alt="Imagen" class="img-fluid w-100" style="height:220px;object-fit:cover;">
+            <span class="badge position-absolute top-0 end-0 m-2"
+                  [ngClass]="inmueble.disponibilidad === 'Si' ? 'bg-success' : 'bg-danger'">
+              {{ inmueble.disponibilidad }}
+            </span>
+          </div>
+          <div class="p-3 d-flex flex-column">
+            <h5 class="mb-1 fw-bold">{{ inmueble.nombre }}</h5>
+            <p class="text-muted small flex-grow-1">{{ inmueble.descripcion }}</p>
+            <p class="small mb-1"><strong>Capacidad:</strong> {{ inmueble.capacidad }} personas</p>
+            <p class="small mb-1"><strong>Habitaciones:</strong> {{ inmueble.numeroHabitaciones }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <h5 class="text-primary mb-0">S/ {{ inmueble.precioPorNoche | number:'1.2-2' }}</h5>
+              <a [routerLink]="['/cliente/catalogo/detalle', inmueble.id]"
+                 class="btn btn-dark rounded-pill px-4"
+                 [class.disabled]="inmueble.disponibilidad !== 'Si'">
+                Ver
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación -->
+    <div class="d-flex justify-content-center mt-4" *ngIf="totalPaginas > 1">
+      <nav aria-label="Page navigation">
+        <ul class="pagination rounded-pill shadow-sm border border-light">
+          <li class="page-item" [class.disabled]="page === 0">
+            <a class="page-link" (click)="cambiarPagina(0)">Primera</a>
+          </li>
+          <li class="page-item" [class.disabled]="page === 0">
+            <a class="page-link" (click)="cambiarPagina(page - 1)">&laquo; Prev</a>
+          </li>
+          <li class="page-item" *ngFor="let p of [].constructor(totalPaginas); let i = index" [class.active]="i === page">
+            <a class="page-link" (click)="cambiarPagina(i)">{{ i + 1 }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="page === totalPaginas - 1">
+            <a class="page-link" (click)="cambiarPagina(page + 1)">Next &raquo;</a>
+          </li>
+          <li class="page-item" [class.disabled]="page === totalPaginas - 1">
+            <a class="page-link" (click)="cambiarPagina(totalPaginas - 1)">Última</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Sin inmuebles -->
+  <ng-template #sinInmuebles>
+    <div class="text-center text-muted mt-5">
+      <p>No hay inmuebles disponibles para mostrar.</p>
+    </div>
+  </ng-template>
+</div>
+
+<style>
+  .fade-in {
+    animation: fadeIn 0.8s ease-in-out;
+  }
+  .hover-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15) !important;
+    transition: all 0.3s ease-in-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

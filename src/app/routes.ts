@@ -4,25 +4,22 @@ import { roleGuard } from './core/role-guard';
 import { ListadoClienteComponent } from './admin/mantCliente/listado-cliente/listado-cliente.component';
 import { DetalleClienteComponent } from './admin/mantCliente/detalle-cliente/detalle-cliente.component';
 import { EditarClienteComponent } from './admin/mantCliente/editar-cliente/editar-cliente.component';
+import { CatalogoComponent } from './cliente/catalogo/catalogo.component';
+import { MotivoSancionComponent } from './cliente/motivo-sancion.component/motivo-sancion.component';
 import { guestGuard } from './core/guest-guard';
 
 export const routes: Routes = [
-  //ClienteAdmin
-  { path: 'admin/clienteAdmin', component: ListadoClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-  { path: 'admin/clienteAdmin/detalle/:id', component: DetalleClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-  { path: 'admin/clienteAdmin/editar/:id', component: EditarClienteComponent, canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_admin'] }},
-
   //Autenticacion rutas de auth (login, registro, etc)
-  { path: 'auth/login',canActivate: [guestGuard], loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
+  { path: 'auth/login', canActivate: [guestGuard], loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
   { path: 'auth/registro-cliente', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
   { path: 'auth/registro-admin', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
-  
+
   //Proteccion Cliente
   {
     path: 'cliente', loadComponent: () => import('./cliente/home/home.component').then(c => c.HomeClienteComponent),
     canActivate: [authGuard, roleGuard], data: { roles: ['ROLE_cliente'] }
   },
-  
+
   //Proteccion Admin
   {
     path: 'admin', loadComponent: () => import('./admin/home/home').then(c => c.Home),
@@ -30,34 +27,62 @@ export const routes: Routes = [
   },
 
   //Admin reservas
-  { 
-    path: 'admin/reservas',        
-    loadComponent: () => import('./admin/mantReservas/list-reserva/list-reserva.component').then(c => c.ListReservaComponent),
-    canActivate: [authGuard, roleGuard], 
+  {
+    path: 'admin/reservas', loadComponent: () => import('./admin/mantReservas/list-reserva/list-reserva.component').then(c => c.ListReservaComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ROLE_admin'] }
+  },
+
+  // Mantenimiento Cliente
+  {
+    path: 'admin/clienteAdmin', loadComponent: () => import('./admin/mantCliente/listado-cliente/listado-cliente.component').then(c => c.ListadoClienteComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ROLE_admin'] }
+  },
+  {
+    path: 'admin/clienteAdmin/detalle/:id', loadComponent: () => import('./admin/mantCliente/detalle-cliente/detalle-cliente.component').then(c => c.DetalleClienteComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ROLE_admin'] }
+  },
+  {
+    path: 'admin/clienteAdmin/editar/:id', loadComponent: () => import('./admin/mantCliente/editar-cliente/editar-cliente.component').then(c => c.EditarClienteComponent),
+    canActivate: [authGuard, roleGuard],
     data: { roles: ['ROLE_admin'] }
   },
 
   //Admin inmuebles
-  { 
-    path: 'admin/inmuebles',        loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),
-    canActivate: [authGuard, roleGuard], 
+  {
+    path: 'admin/inmuebles', loadComponent: () => import('./admin/mantInmueble/list-inmueble/list-inmueble.component').then(c => c.ListInmuebleComponent),
+    canActivate: [authGuard, roleGuard],
     data: { roles: ['ROLE_admin'] }
   },
-  { 
+  {
     path: 'admin/inmuebles/create', loadComponent: () => import('./admin/mantInmueble/create-inmueble/create-inmueble.component').then(c => c.CreateInmuebleComponent),
-    canActivate: [authGuard, roleGuard], 
-    data: { roles: ['ROLE_admin'] } 
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ROLE_admin'] }
   },
-  { 
+  {
     path: 'admin/inmuebles/edit/:id', loadComponent: () => import('./admin/mantInmueble/edit-inmueble/edit-inmueble.component').then(c => c.EditInmuebleComponent),
-    canActivate: [authGuard, roleGuard], 
+    canActivate: [authGuard, roleGuard],
     data: { roles: ['ROLE_admin'] }
   },
-  { 
+  {
     path: 'admin/inmuebles/detail/:id', loadComponent: () => import('./admin/mantInmueble/detail-inmueble/detail-inmueble.component').then(c => c.DetailInmuebleComponent),
-    canActivate: [authGuard, roleGuard], 
+    canActivate: [authGuard, roleGuard],
     data: { roles: ['ROLE_admin'] }
   },
+
+  // Catalogo verInmuebles
+  {
+    path: 'cliente/catalogo/verInmueble', loadComponent: () => import('./cliente/catalogo/catalogo.component').then(c => c.CatalogoComponent),
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['ROLE_cliente'] }
+  },
+  {
+    path: 'cliente/catalogo/motivo-sancion',
+    component: MotivoSancionComponent
+  },
+
 
   // ruta raíz redirige a login
   { path: '', pathMatch: 'full', redirectTo: 'auth/login' },

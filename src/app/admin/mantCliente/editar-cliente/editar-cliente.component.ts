@@ -9,6 +9,7 @@ import { HeaderAdmin } from '../../../shared/header-admin/header-admin';
 
 @Component({
   selector: 'app-editar-cliente',
+  standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, HeaderAdmin],
   templateUrl: './editar-cliente.component.html',
   styleUrl: './editar-cliente.scss'
