@@ -83,6 +83,37 @@ export const routes: Routes = [
     component: MotivoSancionComponent
   },
 
+  //reservar
+
+  // routes.ts (agrega estas rutas abajo de tu bloque cliente)
+{
+  path: 'cliente/catalogo/detalle/:id',
+  loadComponent: () => import('./cliente/catalogo/detalle-inmueble/detalle-inmueble/detalle-inmueble')
+    .then(c => c.DetalleInmuebleComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_cliente'] }
+},
+{
+  path: 'cliente/terminos',
+  loadComponent: () => import('./cliente/terminos/terminos/terminos')
+    .then(c => c.TerminosComponent)
+},
+{
+  path: 'cliente/pago-exitoso',
+  loadComponent: () => import('./cliente/pago-exitoso/pago-exitoso/pago-exitoso')
+    .then(c => c.PagoExitosoComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_cliente'] }
+},
+{
+  path: 'cliente/pago-error',
+  loadComponent: () => import('./cliente/pago-error/pago-error/pago-error')
+    .then(c => c.PagoErrorComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_cliente'] }
+},
+
+
 
   // ruta raíz redirige a login
   { path: '', pathMatch: 'full', redirectTo: 'auth/login' },
