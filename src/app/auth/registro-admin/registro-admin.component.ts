@@ -18,7 +18,8 @@ type RegistroAdminDTO = {
   standalone: true,
   selector: 'app-registro-admin',
   imports: [CommonModule, ReactiveFormsModule, RouterLink],
-  templateUrl: './registro-admin.component.html'
+  templateUrl: './registro-admin.component.html',
+  styleUrls: ['./registro-admin.scss']
 })
 export class RegistroAdminComponent {
   ok = '';
@@ -31,16 +32,19 @@ export class RegistroAdminComponent {
 
   // controles no–null
   form = this.fb.nonNullable.group({
-    nombre: ['', Validators.required],
-    apellido: ['', Validators.required],
-    nroDocumento: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]],
-    telefono: ['', [Validators.required, Validators.pattern(/^\d{9}$/)]],
-    correo: ['', [Validators.required, Validators.email]],
-    clave: ['', Validators.required],
+    nombre: ['', [Validators.required, Validators.maxLength(100)]],
+    apellido: ['', [Validators.required, Validators.maxLength(100)]],
+    nroDocumento: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+    telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{9,15}$/)]],
+    correo: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
+    clave: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
   });
 
   submit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched(); // Fuerza que todos los campos muestren su error
+      return;
+    }
     const dto: RegistroAdminDTO = this.form.getRawValue();
     this.auth.registroAdmin(dto).subscribe({
       next: () => {

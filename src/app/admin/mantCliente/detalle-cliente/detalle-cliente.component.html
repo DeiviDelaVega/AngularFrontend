@@ -1,0 +1,56 @@
+
+<app-header-admin></app-header-admin>
+<br>  
+  <h2 class="text-center section-title">
+    DETALLES DEL CLIENTE CON ID {{ cliente?.idCliente }}
+  </h2>
+
+  <div class="container mt-4" style="padding: 0 15px;">
+    <div class="form-horizontal">
+      <h4 class="text-center">Consulta de datos</h4>
+      <hr />
+      <br />
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="control-label">Nombre</label>
+          <p class="form-control">{{ cliente?.nombre }}</p>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="control-label">Apellido</label>
+          <p class="form-control">{{ cliente?.apellido }}</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="control-label">N° Documento</label>
+          <p class="form-control">{{ cliente?.nroDocumento }}</p>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="control-label">Dirección</label>
+          <p class="form-control">{{ cliente?.direccion }}</p>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="control-label">Teléfono</label>
+          <p class="form-control">{{ cliente?.numeroTelf }}</p>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="control-label">Correo</label>
+          <p class="form-control">{{ cliente?.correo }}</p>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label class="control-label">Estado</label>
+        <p class="form-control">{{ cliente?.estado }}</p>
+      </div>
+
+      <div class="button-group-container mt-4">
+
+        <a class="btn btn-secondary" [routerLink]="['/admin/clienteAdmin']">Volver</a>
+      </div>
+    </div>
+  </div>
