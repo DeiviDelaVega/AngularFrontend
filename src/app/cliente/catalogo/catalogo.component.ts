@@ -6,11 +6,12 @@ import { RouterModule } from '@angular/router';
 import { HeaderClienteComponent } from '../../shared/header-cliente/header-cliente.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MotivoSancionComponent } from '../motivo-sancion.component/motivo-sancion.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-catalogo',
   standalone: true,
-  imports: [ CommonModule, FormsModule,RouterModule, HttpClientModule, DatePipe, DecimalPipe, HeaderClienteComponent],
+  imports: [ CommonModule, FormsModule,RouterModule, HttpClientModule, DecimalPipe, HeaderClienteComponent],
   templateUrl: './catalogo.component.html',
   styleUrls: ['./catalogo.component.scss' ]
 })
@@ -32,7 +33,7 @@ export class CatalogoComponent implements OnInit {
   page: number = 0;
   totalPaginas: number = 0;
 
-  private API_URL = 'http://localhost:8080/api/cliente/catalogo';
+  private API_URL = `${environment.api}/cliente/catalogo`;
 
   constructor(private http: HttpClient) {}
 
@@ -55,8 +56,11 @@ export class CatalogoComponent implements OnInit {
     const token = localStorage.getItem('token');
 
     this.http.get<any>(`${this.API_URL}/verInmueble`, { 
-      params ,  headers: { Authorization: `Bearer ${token}` }
-    }).subscribe({
+  params,
+  headers: { Authorization: `Bearer ${token}` },
+  withCredentials: true
+})
+.subscribe({
     next: (data) => {
       console.log('Respuesta completa del backend:', data);
       this.inmuebles = data.inmuebles || [];
