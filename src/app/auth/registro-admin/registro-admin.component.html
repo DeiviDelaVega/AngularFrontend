@@ -1,102 +1,36 @@
-<nav class=" navbar-dark custom-navbar">
-  <a class="navbar-brand d-flex align-items-center" routerLink="/">
-    <img src="assets/imagenes/nav_image.png" alt="Logo" width="40" height="40">
-    <div>
-      <span>Web de Reservas</span>
-      <small>Monterrico Polo</small>
+<h2 class="text-center mt-4">REGISTRO DE ADMINISTRADOR</h2>
+
+<form class="container col-md-6" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label>Nombre</label>
+      <input class="form-control" formControlName="nombre">
     </div>
-  </a>
-</nav>
-
-<div class="row">
-  <br>
-  <h2 class="text-center">REGISTRO DE ADMINISTRADOR</h2>
-  <br>
-  <div class="containerRegistro form-horizontal">
-    <form class="container" [formGroup]="form" (ngSubmit)="submit()">
-      <!-- Fila 1 -->
-      <div style="display: flex; gap: 20px;">
-        <div style="flex: 1;">
-          <label for="nombre">Nombre:</label>
-          <input id="nombre" type="text" formControlName="nombre" class="form-control" [ngClass]="{'is-invalid': form.get('nombre')?.invalid && form.get('nombre')?.touched}">
-          <div class="invalid-feedback" *ngIf="form.get('nombre')?.invalid && form.get('nombre')?.touched">
-            <div *ngIf="form.get('nombre')?.errors?.['required']">El nombre es obligatorio</div>
-            <div *ngIf="form.get('nombre')?.errors?.['maxlength']">Máximo 100 caracteres</div>
-          </div>
-        </div>
-        <div style="flex: 1;">
-          <label for="apellido">Apellido:</label>
-          <input id="apellido" type="text" formControlName="apellido" class="form-control" [ngClass]="{'is-invalid': form.get('apellido')?.invalid && form.get('apellido')?.touched}">
-          <div *ngIf="form.get('apellido')?.invalid && form.get('apellido')?.touched" class="invalid-feedback">
-            <div *ngIf="form.get('apellido')?.errors?.['required']">El apellido es obligatorio</div>
-            <div *ngIf="form.get('apellido')?.errors?.['maxlength']">Máximo 100 caracteres</div>
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <!-- Fila 2 -->
-      <div style="display: flex; gap: 20px;">
-        <div style="flex: 1;">
-          <label for="nroDocumento">Nro Documento:</label>
-          <input id="nroDocumento" type="text" formControlName="nroDocumento" class="form-control" [ngClass]="{'is-invalid': form.get('nroDocumento')?.invalid && form.get('nroDocumento')?.touched}">
-          <div *ngIf="form.get('nroDocumento')?.invalid && form.get('nroDocumento')?.touched" class="invalid-feedback">
-            <div *ngIf="form.get('nroDocumento')?.errors?.['required']">El Nro Documento es obligatorio</div>
-            <div *ngIf="form.get('nroDocumento')?.errors?.['minlength']">Debe tener 8 dígitos</div>
-            <div *ngIf="form.get('nroDocumento')?.errors?.['maxlength']">Debe tener máximo 8 dígitos</div>
-          </div>
-        </div>
-        <div style="flex: 1;">
-          <label for="telefono">Teléfono:</label>
-          <input id="telefono" type="text" formControlName="telefono" class="form-control" [ngClass]="{'is-invalid': form.get('telefono')?.invalid && form.get('telefono')?.touched}">
-          <div *ngIf="form.get('telefono')?.invalid && form.get('telefono')?.touched" class="invalid-feedback">
-            <div *ngIf="form.get('telefono')?.errors?.['required']">El teléfono es obligatorio</div>
-            <div *ngIf="form.get('telefono')?.errors?.['pattern']">Debe ser un número de 9 digitos hasta 15 digitos</div>
-          </div>
-        </div>
-      </div>
-      <br>
-
-      <!-- Fila 3 -->
-      <div style="display: flex; gap: 20px;">
-        <div style="flex: 1;">
-          <label for="correo">Correo Electrónico:</label>
-          <input id="correo" type="email" formControlName="correo" class="form-control" [ngClass]="{'is-invalid': form.get('correo')?.invalid && form.get('correo')?.touched}">
-          <div *ngIf="form.get('correo')?.invalid && form.get('correo')?.touched" class="invalid-feedback">
-            <div *ngIf="form.get('correo')?.errors?.['required']">El correo es obligatorio</div>
-            <div *ngIf="form.get('correo')?.errors?.['email']">Formato de correo inválido</div>
-            <div *ngIf="form.get('correo')?.errors?.['maxlength']">Máximo 50 caracteres</div>
-          </div>
-        </div>
-        <div style="flex: 1;">
-          <label for="clave">Contraseña:</label>
-          <input id="clave" type="password" formControlName="clave" class="form-control" [ngClass]="{'is-invalid': form.get('clave')?.invalid && form.get('clave')?.touched}">
-          <div *ngIf="form.get('clave')?.invalid && form.get('clave')?.touched" class="invalid-feedback">
-            <div *ngIf="form.get('clave')?.errors?.['required']">La contraseña es obligatoria</div>
-            <div *ngIf="form.get('clave')?.errors?.['minlength']">Debe tener mínimo 6 caracteres</div>
-            <div *ngIf="form.get('clave')?.errors?.['maxlength']">Máximo 50 caracteres</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Mensajes -->
-      <div class="alert alert-success mt-3" *ngIf="ok">{{ok}}</div>
-      <div class="alert alert-danger mt-3" *ngIf="err">{{err}}</div>
-      <br>
-
-      <!-- Botón -->
-      <div class="d-flex justify-content-center mt-3">
-        <button type="submit" class="btn-submit ">Registrarse</button>
-      </div>
-      <br>
-
-      <!-- Link -->
-      <div class="back-link">
-        <p>
-          ¿Ya tienes una cuenta?
-          <a routerLink="/auth/login"><strong>Inicia sesión</strong></a>
-        </p>
-      </div>
-    </form>
-  </div>
+    <div class="col-md-6">
+      <label>Apellido</label>
+      <input class="form-control" formControlName="apellido">
+    </div>
+    <div class="col-md-6">
+      <label>DNI</label>
+      <input class="form-control" formControlName="nroDocumento">
+    </div>
+    <div class="col-md-6">
+  <label>Teléfono</label>
+  <input class="form-control" formControlName="telefono">
 </div>
+    <div class="col-12">
+      <label>Correo</label>
+      <input type="email" class="form-control" formControlName="correo">
+    </div>
+    <div class="col-12">
+      <label>Contraseña</label>
+      <input type="password" class="form-control" formControlName="clave">
+    </div>
+  </div>
+
+  <div class="alert alert-success mt-3" *ngIf="ok">{{ ok }}</div>
+  <div class="alert alert-danger mt-3" *ngIf="err">{{ err }}</div>
+
+  <button class="btn btn-primary mt-2">Registrar administrador</button>
+  <a class="btn btn-link mt-2" routerLink="/auth/login">¿Ya tienes cuenta? Inicia sesión</a>
+</form>

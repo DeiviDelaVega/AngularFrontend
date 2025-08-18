@@ -1,14 +1,6 @@
-<app-header-cliente></app-header-cliente>
-<div class="fade-in">
-  <div class="contenedor py-4 text-center">
-    <h1><strong>Hola </strong> <span>{{nombre}} {{apellido}}</span></h1>
-    <h2><strong>Bienvenido a la vista de CLIENTE</strong></h2>
-
-    <div class="banner-container">
-      <img [src]="imagenActual"
-           [style.opacity]="opacidad"
-           class="img-fluid"
-           alt="Banner">
-    </div>
-  </div>
+<app-header-cliente/>
+<div class="container py-4 text-center">
+  <h1>Hola {{nombre}}</h1>
+  <h2>Bienvenido a la vista de CLIENTE</h2>
+  <img src="assets/imagenes/baner1.jpg" class="img-fluid mt-4" alt="Banner">
 </div>
