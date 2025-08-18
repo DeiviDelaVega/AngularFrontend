@@ -19,17 +19,25 @@ export class LoginComponent {
   error = '';
   loading = false;
   captcha?: CaptchaResponse;
+  success = ''; // Nuevo mensaje de éxito
 
   form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required],
+    password: ['', [Validators.required]],
     // 👇 estos 2 son los que tu backend espera
     captchaId: [''],
-    captchaCode: ['', Validators.required]
+    captchaCode: ['', [Validators.required]]
   });
 
   constructor() {
     this.refreshCaptcha();
+
+    // Verifica si hay mensaje de logout
+    const logoutMsg = localStorage.getItem('logoutMessage');
+    if (logoutMsg) {
+      this.success = logoutMsg;  
+      localStorage.removeItem('logoutMessage');
+    }
   }
 
   refreshCaptcha() {
@@ -43,7 +51,11 @@ export class LoginComponent {
   }
 
   submit() {
+    // Fuerza que se muestren las validaciones
+    this.form.markAllAsTouched();
+
     if (this.form.invalid) return;
+
     this.error = '';
     this.loading = true;
 
@@ -55,17 +67,18 @@ export class LoginComponent {
       captchaCode: v.captchaCode!
     }).subscribe({
       next: _ => {
-        // confía en lo guardado por el AuthService (ya normalizado)
+        // Confía en lo guardado por el AuthService (ya normalizado)
         const role = localStorage.getItem('role');
         const url = role === 'ROLE_admin' ? '/admin' : '/cliente';
         this.router.navigateByUrl(url, { replaceUrl: true });
         this.loading = false;
       },
       error: _ => {
-        this.error = 'Captcha o credenciales inválidos';
+        this.error = 'Correo, contraseña o captcha incorrecto';
+        this.success = '';
         this.loading = false;
         this.form.patchValue({ captchaCode: '' });
-        this.refreshCaptcha(); // genera otro captcha tras el fallo
+        this.refreshCaptcha(); // Genera otro captcha tras el fallo
       }
     });
   }

@@ -8,8 +8,13 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
   styleUrl: './header-admin.scss',
   template: `
     <nav class="navbar navbar-expand-md navbar-dark custom-navbar px-4 py-3">
-      <a class="navbar-brand fw-bold text-white" routerLink="/admin">Web de Reservas</a>
-
+      <a class="navbar-brand d-flex align-items-center" routerLink="/">
+        <img src="assets/imagenes/nav_image.png" alt="Logo" width="40" height="40">
+        <div>
+          <span>Web de Reservas</span>
+          <small>Monterrico Polo</small>
+        </div>
+      </a>
       <!-- Botón hamburguesa -->
       <button
         class="navbar-toggler border-0"
@@ -142,6 +147,7 @@ export class HeaderAdmin {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.setItem('logoutMessage', 'Sesión cerrada correctamente');
     this.router.navigateByUrl('/auth/login');
   }
 }
