@@ -54,7 +54,7 @@
               [ngClass]="{'is-invalid': form.get('descripcion')?.invalid && form.get('descripcion')?.touched}"
               placeholder="Descripción del inmueble"></textarea>
             <div class="invalid-feedback" *ngIf="form.get('descripcion')?.invalid && form.get('descripcion')?.touched">
-              La descripción es obligatoria.
+              La descripción es obligatoria (máx 300 caracteres).
             </div>
           </div>
 
