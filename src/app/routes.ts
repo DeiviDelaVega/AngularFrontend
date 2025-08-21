@@ -83,6 +83,22 @@ export const routes: Routes = [
     path: 'cliente/catalogo/motivo-sancion',
     component: MotivoSancionComponent
   },
+// reportes
+  {
+  path: 'admin/reportes/inmuebles-mas-reservados',
+  loadComponent: () => import('./admin/reportes/inmueble-mas-reservas/inmueble-mas-reservas.component')
+    .then(c => c.InmuebleMasReservasComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_admin'] }
+},
+
+{
+  path: 'admin/reportes/clientes-mas-reservas',
+  loadComponent: () => import('./admin/reportes/clientes-mas-reservas/clientes-mas-reservas.component')
+    .then(c => c.ClientesMasReservasComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_admin'] }
+},
 
   //reservar
 
@@ -113,6 +129,15 @@ export const routes: Routes = [
   canActivate: [authGuard, roleGuard],
   data: { roles: ['ROLE_cliente'] }
 },
+
+{
+  path: 'cliente/mis-reservas',
+  loadComponent: () => import('./cliente/misReservas/misReservas.component')
+    .then(c => c.MisReservasComponent),
+  canActivate: [authGuard, roleGuard],
+  data: { roles: ['ROLE_cliente'] }
+},
+
 
   // ruta raíz redirige a login
   { path: '', pathMatch: 'full', redirectTo: 'auth/pagina-inicio' },

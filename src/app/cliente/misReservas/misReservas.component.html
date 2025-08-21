@@ -1,0 +1,135 @@
+<app-header-cliente></app-header-cliente>
+
+<div class="container pt-3 fade-in">
+  <br />
+  <h4 class="text-center mb-3">🗓️ Mis Reservas Pagadas</h4>
+  <br />
+
+  <!-- alerta de sanción -->
+  <div *ngIf="modalSancion" class="alert alert-warning text-center fade show" role="alert">
+    <strong>{{ alerta || 'Su cuenta ha sido sancionada.' }}</strong>
+  </div>
+
+  <!-- errores -->
+  <div *ngIf="error" class="alert alert-danger text-center p-2 small">{{ error }}</div>
+
+  <!-- sin reservas -->
+  <div *ngIf="!cargando && reservas.length === 0" class="alert alert-info text-center p-2 small">
+    No tienes reservas registradas.
+  </div>
+
+  <!-- listado -->
+  <div *ngIf="esActivo">
+    <div *ngFor="let reserva of reservas" class="card mb-2 shadow-sm reserva-card">
+      <div class="row g-0">
+        <div class="col-md-4">
+       <img [src]="reserva.inmueble?.imagenHabitacion || 'assets/img/no-image.png'"
+            class="img-fluid rounded-start"
+            alt="Imagen del inmueble" />
+        </div>
+
+        <div class="col-md-8">
+          <div class="card-body d-flex flex-column justify-content-between h-100 p-2">
+            <div>
+              <h5 class="card-title text-center mb-2">
+                <strong>{{ reserva.inmueble?.nombre }}</strong>
+              </h5>
+
+              <div class="d-flex justify-content-between mb-1 card-linea">
+                <p class="mb-0">
+                  <strong>Descripción:</strong>
+                  <span>{{ reserva.inmueble?.descripcion }}</span>
+                </p>
+                <p class="mb-0">
+                  <strong>Servicios:</strong>
+                  <span>{{ reserva.inmueble?.serviciosIncluidos }}</span>
+                </p>
+              </div>
+
+              <div class="d-flex justify-content-between mb-1 card-linea">
+                <p class="mb-0">
+                  <strong>Desde:</strong>
+                  <span>{{ reserva.fechaInicio | date:'dd/MM/yyyy' }}</span><br />
+                  <strong>Hasta:</strong>
+                  <span>{{ reserva.fechaFin | date:'dd/MM/yyyy' }}</span>
+                </p>
+                <p class="mb-0">
+                  <strong>Total:</strong>
+                  S/. <span>{{ reserva.montoTotal | number:'1.2-2' }}</span>
+                </p>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center mt-2 px-1">
+                <span class="badge bg-success estado-texto">
+                  {{ reserva.estadoReserva }}
+                </span>
+
+                <button class="btn btn-primary btn-sm" (click)="generarPDF(reserva)">
+                  <i class="fas fa-file-pdf"></i> Descargar PDF
+                </button>
+
+                <button
+                  class="btn btn-danger btn-sm btn-reembolso"
+                  *ngIf="puedeReembolsar(reserva)"
+                  (click)="confirmarReembolso(reserva.id!)"
+                  title="Reembolsar solo estará disponible durante 1 minuto">
+                  <i class="fas fa-undo-alt"></i> Reembolsar
+                </button>
+
+                <!-- Ajusta esta ruta según tu routing real de detalle de inmueble -->
+               <a *ngIf="reserva.inmueble?.id"
+                    [routerLink]="['/cliente/catalogo/detalle', reserva.inmueble.id]"
+                    class="btn btn-dark btn-sm btn-ver">
+                    <i class="fas fa-eye"></i> Ver
+                </a>
+              </div>
+
+              <!-- datos para PDF (en Angular ya no son necesarios en el DOM, los leemos del objeto) -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- paginación -->
+<nav *ngIf="totalPaginas > 1" class="pagination-custom">
+  <!-- Botón "Primera" -->
+  <button class="btn btn-outline-secondary m-1"
+          (click)="cambiarPagina(0)"
+          [disabled]="page === 0">
+    Primera
+  </button>
+
+  <!-- Botón "Prev" -->
+  <button class="btn btn-outline-secondary m-1"
+          (click)="cambiarPagina(page - 1)"
+          [disabled]="page === 0">
+    &laquo; Prev
+  </button>
+
+  <!-- Botones de números de página -->
+  <ng-container *ngFor="let i of [].constructor(totalPaginas); let idx = index">
+    <button class="btn m-1"
+            [ngClass]="idx === page ? 'btn-dark text-white' : 'btn-outline-secondary'"
+            (click)="cambiarPagina(idx)">
+      {{ idx + 1 }}
+    </button>
+  </ng-container>
+
+  <!-- Botón "Next" -->
+  <button class="btn btn-outline-secondary m-1"
+          (click)="cambiarPagina(page + 1)"
+          [disabled]="page + 1 >= totalPaginas">
+    Next &raquo;
+  </button>
+
+  <!-- Botón "Última" -->
+  <button class="btn btn-outline-secondary m-1"
+          (click)="cambiarPagina(totalPaginas - 1)"
+          [disabled]="page + 1 >= totalPaginas">
+    Última
+  </button>
+</nav>
+
+</div>
