@@ -61,7 +61,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
           <li class="nav-item">
             <a
               class="nav-link custom-nav-link"
-              routerLink="/cliente/misreservas/misReservas"
+              routerLink="/cliente/mis-reservas"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="closeNavbar()"

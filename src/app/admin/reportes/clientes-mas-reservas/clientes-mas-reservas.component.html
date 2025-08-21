@@ -1,0 +1,19 @@
+<app-header-admin></app-header-admin>
+<br>
+<div class="reporte-container">
+  <h2 class="titulo">📊 Clientes con Más Reservas</h2>
+
+<div class="tipo-grafico-container">
+  <label for="tipoGrafico">Tipo de gráfico: </label>
+  <select id="tipoGrafico" (change)="cambiarTipoGrafico($event)">
+    <option value="bar">Barras</option>
+    <option value="pie">Pastel</option>
+    <option value="doughnut">Dona</option>
+  </select>
+</div>
+
+
+  <div class="chart-wrapper">
+    <canvas id="graficoClientes"></canvas>
+  </div>
+</div>

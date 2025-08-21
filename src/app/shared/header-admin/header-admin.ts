@@ -94,7 +94,7 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
               <li>
                 <a
                   class="dropdown-item"
-                  routerLink="/admin/reportes/InmueblesMasReservados"
+                  routerLink="/admin/reportes/inmuebles-mas-reservados"
                   (click)="closeNavbar()"
                 >
                   Inmuebles más reservados
@@ -103,7 +103,7 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
               <li>
                 <a
                   class="dropdown-item"
-                  routerLink="/admin/reportes/ClientesMasReservas"
+                  routerLink="/admin/reportes/clientes-mas-reservas"
                   (click)="closeNavbar()"
                 >
                   Clientes con más reservas
