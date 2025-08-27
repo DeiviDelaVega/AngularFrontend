@@ -60,5 +60,22 @@
 }
 .btn-back:hover { background: #f8fafc; transform: translateY(-1px); }
 
+/* Forzar calendario por encima del mapa y cards */
+.flatpickr-calendar {
+  position: absolute !important;
+}
+
+/* Evitar que el panel de pago recorte el calendario */
+.card.pay {
+  overflow: visible !important;
+}
+
+/* Asegurar que el mapa no tape otros elementos */
+#map,
+.map_canvas {
+  position: relative;
+  z-index: 1;
+}
+
 /* Responsive */
 @media (max-width: 992px) { .grid { grid-template-columns: 1fr; } .pay { position: static; } .facts { grid-template-columns: 1fr; } }

@@ -83,6 +83,9 @@ import { Router, RouterLink, RouterLinkActive} from '@angular/router';
           <li class="nav-item dropdown" [class.show]="isDropdownOpen">
             <a
               class="nav-link dropdown-toggle custom-nav-link"
+              routerLink="/admin/reportes"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: false }"
               href="#"
               role="button"
               [attr.aria-expanded]="isDropdownOpen"
