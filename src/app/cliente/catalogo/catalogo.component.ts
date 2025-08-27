@@ -11,9 +11,9 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-catalogo',
   standalone: true,
-  imports: [ CommonModule, FormsModule,RouterModule, HttpClientModule, DecimalPipe, HeaderClienteComponent],
+  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, DecimalPipe, HeaderClienteComponent],
   templateUrl: './catalogo.component.html',
-  styleUrls: ['./catalogo.component.scss' ]
+  styleUrls: ['./catalogo.component.scss']
 })
 export class CatalogoComponent implements OnInit {
 
@@ -35,16 +35,16 @@ export class CatalogoComponent implements OnInit {
 
   private API_URL = `${environment.api}/cliente/catalogo`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.buscar();
   }
 
- buscar(): void {
+  buscar(): void {
     let params = new HttpParams()
-    .set('page', this.page.toString())
-    .set('filtro', this.filtro || '');
+      .set('page', this.page.toString())
+      .set('filtro', this.filtro || '');
 
     if (this.precioDesde != null) params = params.set('precioDesde', this.precioDesde.toString());
     if (this.precioHasta != null) params = params.set('precioHasta', this.precioHasta.toString());
@@ -55,35 +55,34 @@ export class CatalogoComponent implements OnInit {
     this.alerta = ''; // Limpiar la alerta antes de hacer la búsqueda
     const token = localStorage.getItem('token');
 
-    this.http.get<any>(`${this.API_URL}/verInmueble`, { 
-  params,
-  headers: { Authorization: `Bearer ${token}` },
-  withCredentials: true
-})
-.subscribe({
-    next: (data) => {
-      console.log('Respuesta completa del backend:', data);
-      this.inmuebles = data.inmuebles || [];
-      console.log('Inmuebles asignados: ', this.inmuebles);
-      this.totalPaginas = data.totalPaginas || 0;
-      this.alerta = data.alerta || '';
-      this.modalSancion = data.modalSancion || false;
-      this.motivoSancion = data.motivo || '';
-    },
-    error: (err) => {
-      console.error('Error al buscar inmuebles', err);
-      // Aquí manejas el error del backend y lo muestras al usuario
-      this.inmuebles = []; // Asegurarse de que la lista de inmuebles esté vacía
-      if (err.status === 404) {
-        this.alerta = 'No se encontró el servicio. Revise la URL de la API.';
-      } else if (err.status === 401) {
-        this.alerta = 'No está autorizado para ver esta información.';
-      } else {
-        this.alerta = 'Ocurrió un error inesperado al cargar los inmuebles.';
-      }
-    }
-  });
-}
+    this.http.get<any>(`${this.API_URL}/verInmueble`, {
+      params, headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true
+    })
+      .subscribe({
+        next: (data) => {
+          console.log('Respuesta completa del backend:', data);
+          this.inmuebles = data.inmuebles || [];
+          console.log('Inmuebles asignados: ', this.inmuebles);
+          this.totalPaginas = data.totalPaginas || 0;
+          this.alerta = data.alerta || '';
+          this.modalSancion = data.modalSancion || false;
+          this.motivoSancion = data.motivo || '';
+        },
+        error: (err) => {
+          console.error('Error al buscar inmuebles', err);
+          // Aquí manejas el error del backend y lo muestras al usuario
+          this.inmuebles = []; // Asegurarse de que la lista de inmuebles esté vacía
+          if (err.status === 404) {
+            this.alerta = 'No se encontró el servicio. Revise la URL de la API.';
+          } else if (err.status === 401) {
+            this.alerta = 'No está autorizado para ver esta información.';
+          } else {
+            this.alerta = 'Ocurrió un error inesperado al cargar los inmuebles.';
+          }
+        }
+      });
+  }
 
   limpiar(): void {
     this.filtro = '';
@@ -100,8 +99,8 @@ export class CatalogoComponent implements OnInit {
     this.mostrarFiltros = !this.mostrarFiltros;
   }
 
-  cambiarPagina(pagina: number):void{
-    if(pagina >=0  && pagina < this.totalPaginas){
+  cambiarPagina(pagina: number): void {
+    if (pagina >= 0 && pagina < this.totalPaginas) {
       this.page = pagina;
       this.buscar();
     }

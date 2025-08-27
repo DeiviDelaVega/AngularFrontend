@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'auth/login', canActivate: [guestGuard], loadComponent: () => import('./auth/login/login.component').then(c => c.LoginComponent) },
   { path: 'auth/registro-cliente', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-cliente/registro-cliente.component').then(c => c.RegistroClienteComponent) },
   { path: 'auth/registro-admin', canActivate: [guestGuard], loadComponent: () => import('./auth/registro-admin/registro-admin.component').then(c => c.RegistroAdminComponent) },
+
   { path: 'auth/pagina-inicio', loadComponent: () => import('./auth/pagina-inicio/pagina-inicio.component').then(c => c.PaginaInicioComponent) },
 
   //Proteccion Cliente
@@ -60,6 +61,7 @@ export const routes: Routes = [
   {
     path: 'admin/inmuebles/create', loadComponent: () => import('./admin/mantInmueble/create-inmueble/create-inmueble.component').then(c => c.CreateInmuebleComponent),
     canActivate: [authGuard, roleGuard],
+
     data: { roles: ['ROLE_admin'] }
   },
   {
@@ -68,6 +70,7 @@ export const routes: Routes = [
     data: { roles: ['ROLE_admin'] }
   },
   {
+
     path: 'admin/inmuebles/detail/:id', loadComponent: () => import('./admin/mantInmueble/detail-inmueble/detail-inmueble.component').then(c => c.DetailInmuebleComponent),
     canActivate: [authGuard, roleGuard],
     data: { roles: ['ROLE_admin'] }

@@ -123,54 +123,44 @@ export class ListadoClienteComponent implements OnInit {
     }
   }
 
-  confirmacionEliminacion(id: number) {
-    Swal.fire({
-      title: '¿Estás seguro de eliminar este cliente?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar',
-      customClass: {
-        popup: 'swal-custom-popup'
-      }})
-      .then((result) => {
-        if(result.isConfirmed){
-          this.eliminarCliente(id);
+  eliminarCliente(id: number) {
+  Swal.fire({
+    title: '¿Estás seguro de eliminar este cliente?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar',
+    customClass: { popup: 'swal-custom-popup' }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.clienteService.eliminarCliente(id).subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: '¡Cliente eliminado!',
+            text: res.mensaje || 'El cliente fue eliminado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            customClass: { popup: 'swal-custom-popup' }
+          });
+          this.clientes = this.clientes.filter(cliente => cliente.idCliente !== id);
+        },
+        error: () => {
+          Swal.fire({
+            title: 'Error',
+            text: 'No se pudo eliminar el cliente',
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            customClass: { popup: 'swal-custom-popup' }
+          });
         }
       });
-  }
+    }
+  });
+}
 
-  eliminarCliente(id: number) {
-    this.clienteService.eliminarCliente(id).subscribe({
-      next: () => {
-        Swal.fire({
-          title: '¡Cliente eliminado!',
-          text: 'El cliente fue eliminado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-          customClass: {
-            popup: 'swal-custom-popup'
-          }
-        });
-        // Recargamos la lista de clientes después de la eliminación exitosa
-        this.clientes = this.clientes.filter(cliente => cliente.idCliente ! == id);
-      },
-      error: (error) => {
-        Swal.fire({
-          title: 'Error',
-          text: 'No se pudo eliminar el cliente',
-          icon: 'error',
-          confirmButtonText: 'Aceptar',
-          customClass: {
-            popup: 'swal-custom-popup'
-          }
-        });
-      }
-    });
-  }
 
   private checkAndShowAlerts(): void {
     this.activatedRoute.queryParams.subscribe(params => {
