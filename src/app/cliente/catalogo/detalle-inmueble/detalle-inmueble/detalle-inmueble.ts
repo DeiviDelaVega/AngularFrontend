@@ -42,6 +42,7 @@ export class DetalleInmuebleComponent implements OnInit {
 
   // Mapa
   hasCoords = false;
+  private static mapsReady?: Promise<void>;
 
   ngOnInit() {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
@@ -102,7 +103,7 @@ export class DetalleInmuebleComponent implements OnInit {
       allowInput: false,
       locale: Spanish,
       clickOpens: true,
-      static: true
+      // static: true
     }) as unknown as FlatpickrInstance;
 
     flatpickr(entradaEl, {
@@ -116,7 +117,7 @@ export class DetalleInmuebleComponent implements OnInit {
       allowInput: false,
       locale: Spanish,
       clickOpens: true,
-      static: true
+      // static: true
     });
   }
 
@@ -169,57 +170,84 @@ export class DetalleInmuebleComponent implements OnInit {
     });
   }
 
-  /** Carga el script de Google Maps una sola vez y luego pinta */
- private tryInitMap() {
-  if (!this.hasCoords) return;
+  /** --- MAPA --- */
+  private async tryInitMap() {
+    if (!this.hasCoords) return;
 
-  // Si ya está cargado, dibuja directo
-  if (window.google && window.google.maps) {
+    // Esperar a que exista el div#map
+    await this.waitForMapElement();
+
+    // Esperar a que Google Maps esté listo
+    await this.loadGoogleMapsOnce();
+
+    // Dibujar Mapa
     this.renderMap();
-    return;
   }
 
-  // Definimos el callback que llama la librería al cargar
-  window.initGMap = () => this.renderMap();
+  private waitForMapElement(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const tryFind = () => {
+        const el = document.getElementById('map');
+        if (el) resolve();
+        else setTimeout(tryFind, 0);
+      };
+      tryFind();
+    });
+  }
 
-  // Evita duplicados
-  if (document.getElementById('gmaps-js')) return;
+  private loadGoogleMapsOnce(): Promise<void> {
+    if ((window as any).google?.maps) return Promise.resolve();
 
-  const s = document.createElement('script');
-  s.id = 'gmaps-js';
-  s.async = true;
-  s.defer = true;
-  // API key directo aquí
-  s.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCc1pV5K0s9Z7xGUUU03n6zBhKemKLiRx8&callback=initGMap`;
-  document.body.appendChild(s);
-}
+    if (!DetalleInmuebleComponent.mapsReady) {
+      DetalleInmuebleComponent.mapsReady = new Promise<void>((resolve) => {
+        const existed = document.getElementById('gmaps-js') as HTMLScriptElement | null;
+        if (existed) {
+          if ((window as any).google?.maps) resolve();
+          else existed.addEventListener('load', () => resolve());
+          return;
+        }
 
-
-  /** Dibuja el mapa con marcador */
-  private renderMap() {
-    try {
-      const el = document.getElementById('map');
-      if (!el) return;
-
-      const lat = Number(this.inmueble.latitud);
-      const lng = Number(this.inmueble.longitud);
-      const center = { lat, lng };
-
-      const map = new window.google.maps.Map(el, {
-        center,
-        zoom: 15,
-        mapTypeControl: false,
-        fullscreenControl: false,
-        streetViewControl: false,
+        const s = document.createElement('script');
+        s.id = 'gmaps-js';
+        s.async = true;
+        s.defer = true;
+        s.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCc1pV5K0s9Z7xGUUU03n6zBhKemKLiRx8`;
+        s.onload = () => resolve();
+        document.body.appendChild(s);
       });
-
-      new window.google.maps.Marker({
-        position: center,
-        map,
-        title: this.inmueble?.nombre || 'Ubicación'
-      });
-    } catch (e) {
-      console.error('Error dibujando mapa:', e);
     }
+
+    return DetalleInmuebleComponent.mapsReady;
+  }
+
+  private renderMap(retry = 10) {
+    const el = document.getElementById('map') as HTMLElement | null;
+    if (!el) {
+      if (retry > 0) setTimeout(() => this.renderMap(retry - 1), 30);
+      return;
+    }
+
+    const lat = Number(this.inmueble?.latitud);
+    const lng = Number(this.inmueble?.longitud);
+    const center = { lat, lng };
+
+    const map = new (window as any).google.maps.Map(el, {
+      center,
+      zoom: 15,
+      mapTypeControl: false,
+      fullscreenControl: false,
+      streetViewControl: false,
+    });
+
+    new (window as any).google.maps.Marker({
+      position: center,
+      map,
+      title: this.inmueble?.nombre || 'Ubicación',
+    });
+
+    setTimeout(() => {
+      (window as any).google.maps.event.trigger(map, 'resize');
+      map.setCenter(center);
+    }, 0);
   }
 }
