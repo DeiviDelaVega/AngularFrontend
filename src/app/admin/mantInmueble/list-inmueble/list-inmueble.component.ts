@@ -94,24 +94,27 @@ export class ListInmuebleComponent implements OnInit {
   }
 
   eliminarInmueble(id: number) {
-    this.http.delete(`http://localhost:8080/api/admin/inmuebles/${id}`)
-      .subscribe(() => {
-        Swal.fire({
-          title: '¡Inmueble eliminado!',
-          text: 'El inmueble se ha eliminado correctamente',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-          customClass: { popup: 'swal-custom-popup' }
-        });
-        this.cargarInmuebles(this.currentPage);
-      }, error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'No se puede eliminar',
-          text: error.error?.message || 'Este inmueble tiene reservas asociadas',
-          confirmButtonText: 'Aceptar',
-          customClass: { popup: 'swal-custom-popup' }
-        });
+    this.http.delete<any>(`http://localhost:8080/api/admin/inmuebles/eliminar/${id}`)
+      .subscribe({
+        next: (res) => {
+          Swal.fire({
+            title: '¡Inmueble eliminado!',
+            text: res.mensaje,
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            customClass: { popup: 'swal-custom-popup' }
+          });
+          this.cargarInmuebles(this.currentPage);
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'No se puede eliminar',
+            text: err.error?.error || 'Este inmueble tiene reservas asociadas',
+            confirmButtonText: 'Aceptar',
+            customClass: { popup: 'swal-custom-popup' }
+          });
+        }
       });
   }
 }

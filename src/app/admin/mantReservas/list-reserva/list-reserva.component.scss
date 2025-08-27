@@ -360,3 +360,83 @@ button.btn-dark:hover {
         padding: 4px 8px !important;
     }
 }
+
+/* Estilos para la paginación personalizada */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 1rem;
+}
+
+.pagination-container .btn {
+  min-width: 40px;
+  height: 36px;
+  padding: 6px 12px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background-color: white;
+  color: #6c757d;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+  margin: 0;
+}
+
+.pagination-container .btn:hover:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  color: #495057;
+}
+
+.pagination-container .btn:disabled {
+  background-color: #f8f9fa;
+  border-color: #dee2e6;
+  color: #adb5bd;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Botón activo/seleccionado */
+.pagination-container .btn.active,
+.pagination-container .btn-dark {
+  background-color: #212529;
+  border-color: #212529;
+  color: white;
+}
+
+.pagination-container .btn.active:hover,
+.pagination-container .btn-dark:hover {
+  background-color: #1c1f23;
+  border-color: #1c1f23;
+}
+
+/* Botones de navegación (Primera, Prev, Next, Última) */
+.pagination-container .btn.nav-btn {
+  padding: 6px 16px;
+  min-width: auto;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .pagination-container {
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  
+  .pagination-container .btn {
+    min-width: 36px;
+    height: 32px;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .pagination-container .btn.nav-btn {
+    padding: 4px 12px;
+  }
+}

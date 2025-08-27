@@ -252,9 +252,6 @@ select.form-control:not([size]):not([multiple]) {
 
 button.btn-dark,
 .btn-secondary {
-    width: 160px;
-    height: 50px;
-    padding: 10px 24px;
     font-size: 1rem;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -296,6 +293,13 @@ button.btn-dark:hover {
 
 .invalid-feedback{
 	padding-left: 23px;
+}
+
+.mt-4 { 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-wrap: nowrap;
 }
 
 @media (max-width: 576px) {

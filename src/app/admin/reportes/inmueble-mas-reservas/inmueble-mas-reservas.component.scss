@@ -1,0 +1,56 @@
+.reporte-container {
+  text-align: center;
+  margin-top: 2rem;
+  
+}
+
+.titulo {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.chart-wrapper {
+  width: 100%;
+  height: 70vh;              // altura relativa al viewport
+  max-width: 1200px;         // opcional, para no crecer demasiado
+  margin: auto;               // centra horizontalmente
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;    // centra horizontalmente el canvas
+  align-items: center;        // centra verticalmente el canvas
+  box-sizing: border-box;
+}
+
+.tipo-grafico-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 0.8rem; // espacio entre label y select
+
+  label {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f8f9fa;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border-color: #007bff;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+  }
+}

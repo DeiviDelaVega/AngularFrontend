@@ -9,8 +9,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header-cliente.scss',
   template: `
     <nav class="navbar navbar-expand-md navbar-dark custom-navbar px-4 py-3">
-      <a class="navbar-brand fw-bold" routerLink="/cliente" style="font-size: 24px;">
-        Web de Reservas
+      <a class="navbar-brand d-flex align-items-center" routerLink="/">
+        <img src="assets/imagenes/nav_image.png" alt="Logo" width="40" height="40">
+        <div>
+          <span>Web de Reservas</span>
+          <small>Monterrico Polo</small>
+        </div>
       </a>
 
       <button
@@ -57,7 +61,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
           <li class="nav-item">
             <a
               class="nav-link custom-nav-link"
-              routerLink="/cliente/misreservas/misReservas"
+              routerLink="/cliente/mis-reservas"
               routerLinkActive="active"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="closeNavbar()"
@@ -96,6 +100,7 @@ export class HeaderClienteComponent {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.setItem('logoutMessage', 'Sesión cerrada correctamente');
     this.router.navigateByUrl('/auth/login');
   }
 }

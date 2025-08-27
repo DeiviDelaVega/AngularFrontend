@@ -43,8 +43,8 @@
           </select>
         </div>
         <div class="col-md-6 d-flex align-items-center mb-2">
-          <button type="submit" class="btn btn-dark mr-2 espacio" style="margin-left: 17px;">Buscar</button>
-          <button type="button" class="btn btn-secondary" (click)="limpiarFiltros()">Limpiar</button>
+          <button type="submit" class="btn btn-dark mr-2 espacio" style="margin-left: 17px; width: 160px; height: 50px; padding: 10px 24px;">Buscar</button>
+          <button type="button" class="btn btn-secondary" style="width: 160px; height: 50px; padding: 10px 24px;" (click)="limpiarFiltros()">Limpiar</button>
         </div>
       </div>
     </form>
@@ -91,24 +91,43 @@
       </tbody>
     </table>
   </div>
-  <br>
-  <nav *ngIf="totalPages > 1" aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="currentPage === 0">
-        <button class="page-link" (click)="cambiarPagina(currentPage - 1)" aria-label="Anterior">
-          <span aria-hidden="true">&laquo;</span>
-        </button>
-      </li>
-      <li class="page-item" *ngFor="let pageIndex of [].constructor(totalPages); let i = index"
-          [class.active]="i === currentPage">
-        <button class="page-link" (click)="cambiarPagina(i)">{{ i + 1 }}</button>
-      </li>
-      <li class="page-item" [class.disabled]="currentPage + 1 >= totalPages">
-        <button class="page-link" (click)="cambiarPagina(currentPage + 1)" aria-label="Siguiente">
-          <span aria-hidden="true">&raquo;</span>
-        </button>
-      </li>
-    </ul>
+  <nav *ngIf="totalPages > 1" class="mt-4 text-center">
+    <!-- Botón "Primera" -->
+    <button class="btn btn-outline-secondary m-1"
+            (click)="cambiarPagina(0)"
+            [disabled]="currentPage === 0">
+      Primera
+    </button>
+
+    <!-- Botón "Prev" -->
+    <button class="btn btn-outline-secondary m-1"
+            (click)="cambiarPagina(currentPage - 1)"
+            [disabled]="currentPage === 0">
+      &laquo; Prev
+    </button>
+
+    <!-- Botones de números de página -->
+    <ng-container *ngFor="let i of [].constructor(totalPages); let idx = index">
+      <button class="btn m-1"
+              [ngClass]="idx === currentPage ? 'btn-dark text-white' : 'btn-outline-secondary'"
+              (click)="cambiarPagina(idx)">
+        {{ idx + 1 }}
+      </button>
+    </ng-container>
+
+    <!-- Botón "Next" -->
+    <button class="btn btn-outline-secondary m-1"
+            (click)="cambiarPagina(currentPage + 1)"
+            [disabled]="currentPage + 1 >= totalPages">
+      Next &raquo;
+    </button>
+
+    <!-- Botón "Última" -->
+    <button class="btn btn-outline-secondary m-1"
+            (click)="cambiarPagina(totalPages - 1)"
+            [disabled]="currentPage + 1 >= totalPages">
+      Última
+    </button>
   </nav>
 </div>
 <br>

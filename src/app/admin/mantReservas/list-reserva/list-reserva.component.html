@@ -104,23 +104,43 @@
     </table>
   </div>
 
-  <nav *ngIf="totalPages > 1" aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" [class.disabled]="currentPage === 0">
-        <button class="page-link" (click)="cambiarPagina(currentPage - 1)" aria-label="Anterior">
-          <span aria-hidden="true">&laquo;</span>
-        </button>
-      </li>
-      <li class="page-item" *ngFor="let pageIndex of [].constructor(totalPages); let i = index"
-          [class.active]="i === currentPage">
-        <button class="page-link" (click)="cambiarPagina(i)">{{ i + 1 }}</button>
-      </li>
-      <li class="page-item" [class.disabled]="currentPage + 1 >= totalPages">
-        <button class="page-link" (click)="cambiarPagina(currentPage + 1)" aria-label="Siguiente">
-          <span aria-hidden="true">&raquo;</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
+  <nav *ngIf="totalPages > 1" class="pagination-container">
+  <!-- Botón "Primera" -->
+  <button class="btn nav-btn"
+          (click)="cambiarPagina(0)"
+          [disabled]="currentPage === 0">
+    Primera
+  </button>
+
+  <!-- Botón "Prev" -->
+  <button class="btn nav-btn"
+          (click)="cambiarPagina(currentPage - 1)"
+          [disabled]="currentPage === 0">
+    « Prev
+  </button>
+
+  <!-- Botones de números de página -->
+  <ng-container *ngFor="let i of [].constructor(totalPages); let idx = index">
+    <button class="btn"
+            [ngClass]="idx === currentPage ? 'active' : ''"
+            (click)="cambiarPagina(idx)">
+      {{ idx + 1 }}
+    </button>
+  </ng-container>
+
+  <!-- Botón "Next" -->
+  <button class="btn nav-btn"
+          (click)="cambiarPagina(currentPage + 1)"
+          [disabled]="currentPage + 1 >= totalPages">
+    Next »
+  </button>
+
+  <!-- Botón "Última" -->
+  <button class="btn nav-btn"
+          (click)="cambiarPagina(totalPages - 1)"
+          [disabled]="currentPage + 1 >= totalPages">
+    Última
+  </button>
+</nav>
 </div>
 <br>

@@ -42,7 +42,7 @@ export class ClienteService {
   }
 
   eliminarCliente(id: number): Observable<any> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<any>(`${this.baseUrl}/${id}`);
   }
 
   getClientesPaginados(page: number, size: number) {
