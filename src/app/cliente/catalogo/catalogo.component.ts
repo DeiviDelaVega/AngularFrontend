@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-catalogo',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, DatePipe, DecimalPipe, HeaderClienteComponent],
+  imports: [CommonModule, FormsModule, RouterModule, HttpClientModule, DecimalPipe, HeaderClienteComponent],
   templateUrl: './catalogo.component.html',
   styleUrls: ['./catalogo.component.scss']
 })
